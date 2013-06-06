@@ -1,0 +1,7 @@
+#!/bin/bash
+
+./aBomb &
+./aBomb &
+./aBomb &
+./aBomb &
+./aBomb &
