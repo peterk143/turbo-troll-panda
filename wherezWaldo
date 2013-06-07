@@ -1,3 +1,16 @@
 #!/bin/bash
 
-## finds frank!!
+## find frizzle!!
+
+DUDE="pkirkpat"
+MINE=$HOSTNAME
+
+for i in 9 #{1..9}
+do 
+    ssh -T CSEESYSTEMS0${i} <<EOF
+who |grep ${DUDE}
+if [ $? == 0 ]; then
+echo "${HOSTNAME: -2:2}" |ssh ${MINE} "cat >> num"
+fi
+EOF
+done 1>/dev/null
