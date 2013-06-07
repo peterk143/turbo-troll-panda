@@ -4,6 +4,7 @@
 ## onto and append that hostname number 
 ## to a list on your localhost
 
+MINE=$HOSTNAME
 BASE=`basename ${0}`
 bold() {
     echo -e "\033[1m${1}\033[0m"
@@ -19,8 +20,6 @@ usage() {
 EOF
 }
 
-MINE=$HOSTNAME
-
 if [ -z "${1}" ]; then
     DUDE="fmurray1"
 elif [ "${1}" == "-h" -o "${1}" == "--help" ]; then
@@ -28,8 +27,7 @@ elif [ "${1}" == "-h" -o "${1}" == "--help" ]; then
     exit 0
 else
     DUDE="${1}"
-    for i in 1 #{1..9}
-    do 
+    for i in 1; do ##{1..9}
 	ssh -T CSEESYSTEMS0${i} <<EOF
 who |grep ${DUDE}
 if [ $? == 0 ]; then
