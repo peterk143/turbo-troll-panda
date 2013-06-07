@@ -1,5 +1,8 @@
 #!/bin/bash
 
+## RFE:: 
+##   send && run script remotely
+
 ./aBomb &
 ./aBomb &
 ./aBomb &
