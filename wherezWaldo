@@ -1,16 +1,40 @@
 #!/bin/bash
 
-## find frizzle!!
+## find which machines DUDE is logged 
+## onto and append that hostname number 
+## to a list on your localhost
 
-DUDE="pkirkpat"
+BASE=`basename ${0}`
+bold() {
+    echo -e "\033[1m${1}\033[0m"
+}
+
+usage() {
+    cat <<EOF
+
+   Usage: ${BASE} username
+
+        `bold Example`:
+              ${BASE} fmurray1
+EOF
+}
+
 MINE=$HOSTNAME
 
-for i in 9 #{1..9}
-do 
-    ssh -T CSEESYSTEMS0${i} <<EOF
+if [ -z "${1}" ]; then
+    DUDE="fmurray1"
+elif [ "${1}" == "-h" -o "${1}" == "--help" ]; then
+    usage
+    exit 0
+else
+    DUDE="${1}"
+    for i in 1 #{1..9}
+    do 
+	ssh -T CSEESYSTEMS0${i} <<EOF
 who |grep ${DUDE}
 if [ $? == 0 ]; then
 echo "${HOSTNAME: -2:2}" |ssh ${MINE} "cat >> num"
 fi
 EOF
-done 1>/dev/null
+    done 1>/dev/null
+fi
