@@ -3,6 +3,8 @@ turbo-troll-panda
 
 skripts fo' ze troll'n
 
-Contributors
 
-kfrank
+*Contributors*
+* kfrank  
+* bmartin4  
+* pkirkpat  
