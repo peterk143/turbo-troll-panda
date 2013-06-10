@@ -10,5 +10,5 @@ skripts fo' ze troll'n
 * pkirkpat  
 
 **RFEs**  
-1. make killaudio read machine list from file  
+1. make killaudio read machine list from file *(iss#5)*   
 2. create mystic foo script (do anything)..  
