@@ -10,5 +10,4 @@ skripts fo' ze troll'n
 * pkirkpat  
 
 *RFEs*
-1. make killaudio read machine list from file
-2. 
+1. make killaudio read machine list from file  
