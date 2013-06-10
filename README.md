@@ -8,3 +8,7 @@ skripts fo' ze troll'n
 * kfrank  
 * bmartin4  
 * pkirkpat  
+
+*RFEs*
+1. make killaudio read machine list from file
+2. 
