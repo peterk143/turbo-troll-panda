@@ -1,8 +1,12 @@
+
 #!/bin/bash
 
 ## find which machines DUDE is logged 
 ## onto and append that hostname number 
 ## to a list on your localhost
+
+## RFE
+##  echo valid machines to stdout
 
 MINE=$HOSTNAME
 BASE=`basename ${0}`
@@ -27,12 +31,18 @@ elif [ "${1}" == "-h" -o "${1}" == "--help" ]; then
     exit 0
 else
     DUDE="${1}"
-    for i in 1; do ##{1..9}
-	ssh -T CSEESYSTEMS0${i} <<EOF
-who |grep ${DUDE}
-if [ $? == 0 ]; then
-echo "${HOSTNAME: -2:2}" |ssh ${MINE} "cat >> num"
 fi
-EOF
-    done 1>/dev/null
-fi
+
+hosts=""
+for i in {1..9}; do
+    nmap -P0 -p22 cseesystems0${i} |grep -q open
+    if [ $? -eq 0 ]; then
+	hosts="${i} ${hosts}"
+    fi
+done
+
+for i in ${hosts}; do
+    A=$(ssh -T CSEESYSTEMS0${i} "who | grep ${DUDE}")
+    B=$(echo "$A" |wc -w)
+    ssh -T CSEESYSTEMS0${i} "if [ ${B} -ne 0 ]; then echo \"${i}\" |ssh ${MINE} \"cat >>num\"; fi"
+done 1>/dev/null
