@@ -32,21 +32,21 @@ clear() {
 }
 
 getHosts() {
-hosts=""
-for i in {1..9}; do
-    nmap -P0 -p22 cseesystems0${i} |grep -q open
-    if [ $? -eq 0 ]; then
-	hosts="${i} ${hosts}"
-    fi
-done   
+    hosts=""
+    for i in {1..9}; do
+	nmap -P0 -p22 cseesystems0${i} |grep -q open
+	if [ $? -eq 0 ]; then
+	    hosts="${i} ${hosts}"
+	fi
+    done   
 }
 
 doWork() {
-for i in ${hosts}; do
-    A=$(ssh -T CSEESYSTEMS0${i} "who | grep ${DUDE}")
-    B=$(echo "$A" |wc -w)
-    ssh -T CSEESYSTEMS0${i} "if [ ${B} -ne 0 ]; then echo \"${i}\" |ssh ${MINE} \"cat >>num\"; fi"
-done 1>/dev/null
+    for i in ${hosts}; do
+	A=$(ssh -T CSEESYSTEMS0${i} "who | grep ${DUDE}")
+	B=$(echo "$A" |wc -w)
+	ssh -T CSEESYSTEMS0${i} "if [ ${B} -ne 0 ]; then echo \"0${i}\" |ssh ${MINE} \"cat >>num\"; fi"
+    done 1>/dev/null
 }
 
 print() {
@@ -56,19 +56,32 @@ print() {
 }
 
 clear
-if [ $# -eq 1 ]; then
-    case "${1}" in
-	-h|--help) usage ;;
-	-o|--std-out) 
-	    DUDE="fmurray1"
-	    getHosts
-	    doWork
-	    print ;;
-	*) echo "improper input, br0" ;;
-    esac
-elif [ $# -eq 2 -a "${1}" == "-o" -o "${1}" == "--std-out" ]; then
-    DUDE="${2}"
+DUDE="fmurray1"
+if [ $# -eq 0 ]; then
     getHosts
     doWork
-    print
+    exit 0
+elif [ $# -eq 1 ]; then
+    case "${1}" in
+	-h|--help) 
+	    usage 
+	    exit 0 ;;
+	-o|--std-out) ;;  ## just here to grab input
+	*) DUDE="${1}" 
+	    getHosts
+	    doWork
+	    exit 0 ;;
+    esac
+elif [ $# -eq 2 ]; then
+    case "${1}" in 
+	-o|--std-out) DUDE="${2}" ;;
+	*) echo "improper input, br0"
+	    exit 1 ;;
+    esac
 fi
+
+getHosts
+doWork
+print
+
+exit 0
