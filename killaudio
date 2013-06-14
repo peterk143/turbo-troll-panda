@@ -20,6 +20,8 @@ fi
 
 ## what happens if they are logged into more
 ## than one machine??
+## this only kills audio on the first machine
+## returned in the list
 
 if [ "${1}" = "02" -o "${1}" = "06" ]; then
     ssh -A cseesystems${1} " 'osascript -e 'set volume 0''"
