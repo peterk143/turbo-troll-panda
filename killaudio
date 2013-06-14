@@ -13,11 +13,13 @@ then
     exit
 fi
 
-
 if [ "${1}" = "--help" -o "${1}" = "-h" ]; then
     usage
     exit
 fi
+
+## what happens if they are logged into more
+## than one machine??
 
 if [ "${1}" = "02" -o "${1}" = "06" ]; then
     ssh -A cseesystems${1} " 'osascript -e 'set volume 0''"
