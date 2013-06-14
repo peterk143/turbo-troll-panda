@@ -20,7 +20,8 @@ usage() {
      -o, --std-out               outputs machine numbers to standard out
 
         `bold Example`:
-              ${BASE} fmurray1
+              ${BASE} pkirkpat
+              ${BASE} -o bmartin4
 EOF
 }
 
