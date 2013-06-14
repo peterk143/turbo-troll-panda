@@ -19,7 +19,10 @@ if [ "${1}" = "--help" -o "${1}" = "-h" ]; then
     exit
 fi
 
-
-ssh -A cseesystems${1} "sudo killall pulseaudio"
+if [ "${1}" = "02" -o "${1}" = "06" ]; then
+    ssh -A cseesystems${1} " 'osascript -e 'set volume 0''"
+else
+    ssh -A cseesystems${1} "sudo killall pulseaudio"
+fi
 
 exit 0
