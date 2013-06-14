@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 ## find which machines DUDE is logged 
@@ -17,32 +16,60 @@ bold() {
 usage() {
     cat <<EOF
 
-   Usage: ${BASE} username
+   Usage: ${BASE} [-o | --std-out] username
+
+  -Options-
+     -o, --std-out               outputs machine numbers to standard out
 
         `bold Example`:
               ${BASE} fmurray1
 EOF
 }
 
-if [ -z "${1}" ]; then
-    DUDE="fmurray1"
-elif [ "${1}" == "-h" -o "${1}" == "--help" ]; then
-    usage
-    exit 0
-else
-    DUDE="${1}"
-fi
+clear() {
+    if [ -f ~/num ]; then
+	rm ~/num
+    fi
+}
 
+getHosts() {
 hosts=""
 for i in {1..9}; do
     nmap -P0 -p22 cseesystems0${i} |grep -q open
     if [ $? -eq 0 ]; then
 	hosts="${i} ${hosts}"
     fi
-done
+done   
+}
 
+doWork() {
 for i in ${hosts}; do
     A=$(ssh -T CSEESYSTEMS0${i} "who | grep ${DUDE}")
     B=$(echo "$A" |wc -w)
     ssh -T CSEESYSTEMS0${i} "if [ ${B} -ne 0 ]; then echo \"${i}\" |ssh ${MINE} \"cat >>num\"; fi"
 done 1>/dev/null
+}
+
+print() {
+    if [ -f ~/num ]; then
+	cat ~/num
+    fi
+}
+
+clear
+if [ $# -eq 1 ]; then
+    case "${1}" in
+	-h|--help) usage ;;
+	-o|--std-out) 
+	    DUDE="fmurray1"
+	    getHosts
+	    doWork
+	    print ;;
+	*) echo "improper input, br0" ;;
+    esac
+elif [ $# -eq 2 -a "${1}" == "-o" -o "${1}" == "--std-out" ]; then
+    DUDE="${2}"
+    getHosts
+    doWork
+    print
+fi
