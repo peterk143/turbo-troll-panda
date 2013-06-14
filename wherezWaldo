@@ -1,11 +1,9 @@
 #!/bin/bash
 
 ## find which machines DUDE is logged 
-## onto and append that hostname number 
-## to a list on your localhost
-
-## RFE
-##  echo valid machines to stdout
+## onto and appends that hostname number 
+## to a list on your localhost and
+## prints to standard out
 
 MINE=$HOSTNAME
 BASE=`basename ${0}`
