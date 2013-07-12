@@ -1,0 +1,13 @@
+#! /bin/bash
+
+DUDE=$1
+SHOT="$(mktemp -d)/webcam.jpg"
+CHECK=$(fswebcam --version)
+
+if [ $? -ne 255 ]; then
+    sudo apt-get install fswebcam
+else
+    sudo fswebcam --jpeg 85 -D 1 "${SHOT}"
+fi
+
+sudo -u "${DUDE}" -c gsettings set org.gnome.desktop.background picture-uri file://"${SHOT}"
