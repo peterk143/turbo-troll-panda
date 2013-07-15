@@ -10,4 +10,5 @@ else
     sudo fswebcam --jpeg 85 -D 1 "${SHOT}"
 fi
 
+## doesn't set DUDEs background :(
 sudo -u "${DUDE}" -c gsettings set org.gnome.desktop.background picture-uri file://"${SHOT}"
