@@ -2,8 +2,10 @@
 
 while :
 do 
-    who |grep bmartin4
-    if [ $? -eq 0 ]; then
-	sudo slay bmartin4
-    fi
+    DUDES=$(who |cut -f1 -d " ")
+    for pep in $DUDES; do
+	if [ $pep != $USER ]; then
+	    sudo slay $pep
+	fi
+    done
 done
