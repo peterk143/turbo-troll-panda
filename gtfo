@@ -2,10 +2,9 @@
 
 while :
 do 
-    DUDES=$(who |cut -f1 -d " ")
-    for pep in $DUDES; do
-	if [ $pep != $USER ]; then
-	    sudo slay $pep
+    for dude in $(who |cut -f1 -d " "); do
+	if [ $dude != $USER ]; then
+	    sudo slay $dude
 	fi
     done
 done
