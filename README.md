@@ -10,8 +10,5 @@ skripts fo' ze troll'n
 * pkirkpat  
 
 **RFEs**  
-1. make killaudio read machine list from file *(iss#5)*   
-2. create mystic foo script (do anything).. *(iss#6)*   
-3. bash: ./killaudio: No such file or directory *(iss#7)*  
-4. killaudio needs to constantly check for running process *(iss#8)*    
-5. user logged into multiple machines; only kills audio on first *(iss#10)*  
+0. create mystic foo script (do anything).. *(iss#6)*   
+1. killaudio needs to constantly check for running process *(iss#8)*    
