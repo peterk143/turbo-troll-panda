@@ -20,9 +20,9 @@ fi
 
 for host in "$@"; do
     if [ "$host" = "02" -o "$host" = "06" ]; then
-	ssh -A cseesystems${1} " 'osascript -e 'set volume 0''"
+	ssh -xA cseesystems${1} " 'osascript -e 'set volume 0''"
     else
-	ssh -A cseesystems${1} "sudo killall pulseaudio"
+	ssh -xA cseesystems${1} "sudo killall pulseaudio"
     fi
 done
 
