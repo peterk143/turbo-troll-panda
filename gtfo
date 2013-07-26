@@ -1,23 +1,19 @@
 #!/bin/bash
 
-## RFE:: make slay output this msg
-
 MSG="""
   ____ _____ _/  |_  _____      __| _/|__| ____ |  | __
-_/ __ \\__  \\   __\ \__  \    / __ | |  |/ ___\|  |/ /
+ / __ \\\\__  \\\\   __\ \__  \    / __ | |  |/ ___\|  |/ /
 \  ___/ / __ \|  |    / __ \_ / /_/ | |  \  \___|    < 
- \___  >____  /__|   (____  / \____ | |__|\___  >__|_ \
+ \___  (____  /__|   (____  / \____ | |__|\___  >__|_ \\
      \/     \/            \/       \/         \/     \/
 """
 
-CHECK=$(slay 2>/dev/null)
+while : ; do
+    for dude in $(who |cut -f1 -d " "); do
+	if [ $dude != $USER ]; then
+	    echo "${MSG}" |write $dude
 
-if [ $? -eq 2 ]; then
-    while : ; do
-	for dude in $(who |cut -f1 -d " "); do
-	    if [ $dude != $USER ]; then
-		sudo slay $dude
-	    fi
-	done
+	    sudo killall -u $dude
+	fi
     done
-fi
+done
