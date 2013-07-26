@@ -1,9 +1,13 @@
 #!/bin/bash
 
-while : ; do
-    for dude in $(who |cut -f1 -d " "); do
-	if [ $dude != $USER ]; then
-	    sudo slay $dude
-	fi
+CHECK=$(slay 2>/dev/null)
+
+if [ $? -eq 2 ]; then
+    while : ; do
+	for dude in $(who |cut -f1 -d " "); do
+	    if [ $dude != $USER ]; then
+		sudo slay $dude
+	    fi
+	done
     done
-done
+fi
