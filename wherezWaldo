@@ -5,6 +5,9 @@
 ## to a list on your localhost and
 ## prints to standard out
 
+# worx best if your ssh key is in 
+# authorized_keys on each host
+
 MINE=$HOSTNAME
 BASE=`basename ${0}`
 bold() {
@@ -43,10 +46,10 @@ getHosts() {
 
 doWork() {
     for i in ${hosts}; do
-	A=$(ssh -T CSEESYSTEMS0${i} "who | grep ${DUDE}")
+	A=$(ssh -xT CSEESYSTEMS0${i} "who | grep ${DUDE}")
 	B=$(echo "$A" |wc -w)
-	ssh -T CSEESYSTEMS0${i} "if [ ${B} -ne 0 ]; then echo \"0${i}\" |ssh ${MINE} \"cat >>num\"; fi"
-    done 1>/dev/null
+	ssh -xT CSEESYSTEMS0${i} "if [ ${B} -ne 0 ]; then echo \"0${i}\" |ssh ${MINE} \"cat >>num\"; fi"
+    done 2>/dev/null
 }
 
 print() {
