@@ -7,7 +7,7 @@ Kills audio on a cseesystem linux machine
 EOF
 }
 
-if [ $# -ne 1 ]
+if [ $# -lt 1 ]
 then
     usage
     exit
@@ -18,15 +18,12 @@ if [ "${1}" = "--help" -o "${1}" = "-h" ]; then
     exit
 fi
 
-## what happens if they are logged into more
-## than one machine??
-## this only kills audio on the first machine
-## returned in the list
-
-if [ "${1}" = "02" -o "${1}" = "06" ]; then
-    ssh -A cseesystems${1} " 'osascript -e 'set volume 0''"
-else
-    ssh -A cseesystems${1} "sudo killall pulseaudio"
-fi
+for host in "$@"; do
+    if [ "$host" = "02" -o "$host" = "06" ]; then
+	ssh -A cseesystems${1} " 'osascript -e 'set volume 0''"
+    else
+	ssh -A cseesystems${1} "sudo killall pulseaudio"
+    fi
+done
 
 exit 0

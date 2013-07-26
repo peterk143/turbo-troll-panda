@@ -8,7 +8,7 @@
 # worx best if your ssh key is in 
 # authorized_keys on each host
 
-MINE=$HOSTNAME
+MINE=$(ifconfig eth0|grep inet|awk {'print $2'}|cut -d":" -f2)
 BASE=`basename ${0}`
 bold() {
     echo -e "\033[1m${1}\033[0m"
