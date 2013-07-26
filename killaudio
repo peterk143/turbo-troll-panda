@@ -3,12 +3,13 @@
 usage() {
     cat <<EOF
 Usage: ${0}  machine-number
-Kills audio on a cseesystem linux machine
+Kills audio on a CSEESYSTEMS linux machine
+
+  EXAMPLE: wherezWaldo -o pkirkpat |xargs killaudio
 EOF
 }
 
-if [ $# -lt 1 ]
-then
+if [ $# -lt 1 ]; then
     usage
     exit
 fi
@@ -20,7 +21,7 @@ fi
 
 for host in "$@"; do
     if [ "$host" = "02" -o "$host" = "06" ]; then
-	ssh -xA cseesystems${1} " 'osascript -e 'set volume 0''"
+	ssh -xA cseesystems${1} "osascript -e 'set volume 0'"
     else
 	ssh -xA cseesystems${1} "sudo killall pulseaudio"
     fi
